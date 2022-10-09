@@ -1,5 +1,5 @@
 import React from "react";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Vignette, EffectComposer } from "@react-three/postprocessing";
 import { useControls } from "leva";
@@ -14,6 +14,7 @@ export default function App() {
   return (
     <div className="h-screen">
       <Canvas>
+        <PerspectiveCamera makeDefault position={[3, 2, 3]} />
         <color attach="background" args={[backgroundColor]} />
         <EffectComposer>
           <Vignette eskil={true} opacity={0.5} offset={0.1} darkness={1.5} />
