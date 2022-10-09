@@ -1,13 +1,14 @@
+import React from "react";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Vignette, EffectComposer } from "@react-three/postprocessing";
 import { useControls } from "leva";
+import Buffer from "./Buffer";
 
 export default function App() {
-  const { color, scale, backgroundColor } = useControls({
-    color: "#ff005b",
-    scale: [1, 1, 1],
-    backgroundColor: "#ffffff",
+  const { lightColor, backgroundColor } = useControls("Scene", {
+    lightColor: "#ffffff",
+    backgroundColor: "#191a2e",
   });
 
   return (
@@ -18,13 +19,8 @@ export default function App() {
           <Vignette eskil={true} opacity={0.5} offset={0.1} darkness={1.5} />
         </EffectComposer>
         <OrbitControls />
-        <ambientLight intensity={0.1} />
-        <directionalLight color={color} position={[1, 2, 5]} />
-        <directionalLight color={color} position={[-1, -2, -5]} />
-        <mesh scale={scale}>
-          <boxGeometry />
-          <meshStandardMaterial />
-        </mesh>
+        <ambientLight color={lightColor} intensity={0.1} />
+        <Buffer />
       </Canvas>
     </div>
   );
