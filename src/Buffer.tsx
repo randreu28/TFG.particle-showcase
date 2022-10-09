@@ -3,6 +3,7 @@ import { useControls } from "leva";
 import { ComputedAttribute, shaderMaterial } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
 import * as THREE from "three";
+import gsap from "gsap";
 
 import type { Points } from "three";
 
@@ -14,10 +15,10 @@ import vertShader from "../public/shaders/vertex.glsl";
 export default function Buffer() {
   const ref = useRef<Points>(null!);
 
-  const [params, set] = useControls("Particles", () => ({
+  const [params, setParams] = useControls("Particles", () => ({
     bufferColor: "#f8665d",
-    particleSize: { value: 2, min: 0, max: 7 },
-    transparencyState: { value: 1.0, min: 0, max: 1 },
+    particleSize: { value: 6, min: 0, max: 10 },
+    transparencyState: { value: 0.0, min: 0, max: 1 },
     randomState: { value: 0.0, min: 0, max: 1 },
     state1: { value: 1.0, min: 0, max: 1 },
     state2: { value: 1.0, min: 0, max: 1 },
@@ -42,8 +43,34 @@ export default function Buffer() {
   extend({ ShaderMaterial });
   ShaderMaterial.key = THREE.MathUtils.generateUUID();
 
+  //Initial animation
+  useEffect(() => {
+    gsap.to(params, {
+      randomState: 1.0,
+      duration: 3.0,
+      ease: "circ.out",
+      onUpdate: () => {
+        setParams({
+          randomState: params.randomState,
+        });
+      },
+    });
+
+    gsap.to(params, {
+      delay: 1,
+      transparencyState: 1.0,
+      duration: 2.0,
+      ease: "linear",
+      onUpdate: () => {
+        setParams({
+          transparencyState: params.transparencyState,
+        });
+      },
+    });
+  }, []);
+
   return (
-    <points ref={ref}>
+    <points ref={ref} scale={[2, 2, 2]}>
       <bufferGeometry>
         <ComputedAttribute
           name="position"
