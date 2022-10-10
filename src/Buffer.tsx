@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useControls } from "leva";
 import { ComputedAttribute, shaderMaterial } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
@@ -14,6 +14,8 @@ import vertShader from "./shaders/vertex.glsl";
 
 export default function Buffer() {
   const ref = useRef<Points>(null!);
+
+  let [tick, setTick] = useState<number>(0);
 
   const [params, setParams] = useControls("Particles", () => ({
     bufferColor: "#f8665d",
@@ -67,6 +69,80 @@ export default function Buffer() {
         });
       },
     });
+  }, []);
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (tick == 3) {
+        tick = 0;
+        setTick(0);
+      } else {
+        ++tick;
+        setTick(tick);
+      }
+
+      switch (tick) {
+        case 0:
+          gsap.to(params, {
+            state1: 1.0,
+            state2: 1.0,
+            state3: 1.0,
+            duration: 1.25,
+            ease: "circ.out",
+            onUpdate: () => {
+              setParams({
+                state1: params.state1,
+                state2: params.state2,
+                state3: params.state3,
+              });
+            },
+          });
+          break;
+        case 1:
+          gsap.to(params, {
+            state3: 0.0,
+            duration: 1.25,
+            ease: "circ.out",
+            onUpdate: () => {
+              setParams({
+                state3: params.state3,
+              });
+            },
+          });
+          break;
+        case 2:
+          gsap.to(params, {
+            state2: 0.0,
+            duration: 1.25,
+            ease: "circ.out",
+            onUpdate: () => {
+              setParams({
+                state2: params.state2,
+              });
+            },
+          });
+          break;
+        case 3:
+          gsap.to(params, {
+            state1: 0.0,
+            duration: 1.25,
+            ease: "circ.out",
+            onUpdate: () => {
+              setParams({
+                state1: params.state1,
+              });
+            },
+          });
+          break;
+        default:
+          console.error("tic value expected to be between 0 and 3");
+          break;
+      }
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
