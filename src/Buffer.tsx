@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useControls } from "leva";
 import { ComputedAttribute, shaderMaterial } from "@react-three/drei";
-import { extend } from "@react-three/fiber";
+import { extend, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import gsap from "gsap";
 
@@ -44,6 +44,14 @@ export default function Buffer() {
 
   extend({ ShaderMaterial });
   ShaderMaterial.key = THREE.MathUtils.generateUUID();
+
+  //Keeps the internal time variable of the shader updated
+  useFrame((state) => {
+    //@ts-ignore
+    ref.current.material.uniforms.time.value = state.clock.elapsedTime;
+    /* For complete type-saftey I should extend the default material 
+    type to include the custom uniforms I attached to it */
+  });
 
   //Initial animation
   useEffect(() => {
