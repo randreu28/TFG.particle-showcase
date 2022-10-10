@@ -8,9 +8,9 @@ import gsap from "gsap";
 import type { Points } from "three";
 
 // @ts-ignore
-import fragShader from "../public/shaders/fragment.glsl";
+import fragShader from "./shaders/fragment.glsl";
 // @ts-ignore
-import vertShader from "../public/shaders/vertex.glsl";
+import vertShader from "./shaders/vertex.glsl";
 
 export default function Buffer() {
   const ref = useRef<Points>(null!);
