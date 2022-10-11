@@ -7,7 +7,7 @@ interface UseStore {
 }
 
 const useStore = create<UseStore>((set) => ({
-  tick: 1,
+  tick: 0,
   inc: () => set((state) => ({ tick: state.tick + 1 })),
   reset: () => set(() => ({ tick: 0 })),
 }));
