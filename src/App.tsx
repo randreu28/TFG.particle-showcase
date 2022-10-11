@@ -31,9 +31,11 @@ export default function App() {
           <Buffer />
         </Canvas>
       </div>
-      <div className="text-white p-20">
+      <h1 className="text-white p-20 text-5xl font-['Righteous'] leading-relaxed text-center">
+        <span>Lorem ipsum si</span>
+        <br />
         <DynamicText />
-      </div>
+      </h1>
     </>
   );
 }
