@@ -4,6 +4,7 @@ import { ComputedAttribute, shaderMaterial } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import gsap from "gsap";
+import useStore from "./store/store";
 
 import type { Points } from "three";
 
@@ -15,7 +16,11 @@ import vertShader from "./shaders/vertex.glsl";
 export default function Buffer() {
   const ref = useRef<Points>(null!);
 
-  let [tick, setTick] = useState<number>(0);
+  let { tick, incTick, resetTick } = useStore((state) => ({
+    tick: state.tick,
+    incTick: state.inc,
+    resetTick: state.reset,
+  }));
 
   const [params, setParams] = useControls("Particles", () => ({
     bufferColor: "#f8665d",
@@ -83,10 +88,10 @@ export default function Buffer() {
     let interval = setInterval(() => {
       if (tick == 3) {
         tick = 0;
-        setTick(0);
+        resetTick();
       } else {
         ++tick;
-        setTick(tick);
+        incTick();
       }
 
       switch (tick) {
