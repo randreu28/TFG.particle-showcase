@@ -13,6 +13,8 @@ export default function App() {
     camPosition: [4, 3, 4],
   });
 
+  const { title } = useControls("Texts", { title: "Lorem ipsum siamet" });
+
   return (
     <>
       <div className="h-screen w-screen -z-10 fixed">
@@ -32,7 +34,7 @@ export default function App() {
         </Canvas>
       </div>
       <h1 className="text-white p-20 text-5xl font-['Righteous'] leading-relaxed text-center">
-        <span>Lorem ipsum si</span>
+        <span>{title}</span>
         <br />
         <DynamicText />
       </h1>
