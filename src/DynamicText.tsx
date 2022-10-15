@@ -13,12 +13,7 @@ export default function DynamicText() {
     text4: "Lorem ipsum (3)",
   }));
 
-  const text: string[] = [
-    params.text1,
-    params.text2,
-    params.text3,
-    params.text4,
-  ];
+  const text: string[] = Object.values(params);
 
   return (
     <TextScramble
