@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "model": "blender modeling/king.blend --background --python modeling/export_glb.py -- public/models/king.glb && blender modeling/lightbulb.blend --background --python modeling/export_glb.py -- public/models/lightbulb.glb && blender modeling/rocket.blend --background --python modeling/export_glb.py -- public/models/rocket.glb",
+    "watch": "watch 'yarn model' ./modeling"
   },
   "dependencies": {
     "@a7sc11u/scramble": "^0.0.6",
@@ -30,6 +32,7 @@
     "tailwindcss": "^3.1.8",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
-    "vite-plugin-glsl": "^0.4.0"
+    "vite-plugin-glsl": "^0.4.0",
+    "watch": "^1.0.2"
   }
 }
