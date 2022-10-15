@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useControls } from "leva";
 import { ComputedAttribute, shaderMaterial } from "@react-three/drei";
-import { extend, useFrame } from "@react-three/fiber";
+import { extend, useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 import gsap from "gsap";
 import useStore from "./store/store";
@@ -12,6 +12,7 @@ import type { Material, Points } from "three";
 import fragShader from "./shaders/fragment.glsl";
 // @ts-ignore
 import vertShader from "./shaders/vertex.glsl";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 //For uniforms type safety
 interface myUniforms extends Material {
@@ -173,6 +174,10 @@ export default function Buffer() {
     };
   }, []);
 
+  const king = useLoader(GLTFLoader, "models/king.glb");
+  const lightBulb = useLoader(GLTFLoader, "models/lightbulb.glb");
+  const rocket = useLoader(GLTFLoader, "models/rocket.glb");
+
   return (
     <points ref={ref} scale={[2, 2, 2]}>
       <bufferGeometry>
@@ -184,6 +189,7 @@ export default function Buffer() {
               geometry1.attributes.position.array,
               3
             );
+
             return geometry1Attribute;
           }}
           usage={THREE.StaticReadUsage}
@@ -191,7 +197,7 @@ export default function Buffer() {
 
         <ComputedAttribute
           name="position2"
-          compute={(geometry) => {
+          compute={() => {
             const geometry1 = new THREE.BoxGeometry(1, 1, 1, 16, 16, 16);
             const geometry2 = new Float32Array(
               geometry1.attributes.position.count * 3
@@ -207,10 +213,10 @@ export default function Buffer() {
 
         <ComputedAttribute
           name="position3"
-          compute={(geometry) => {
-            const geometry3 = new THREE.DodecahedronGeometry(0.65, 3);
+          compute={() => {
             const geometry3Attribute = new THREE.BufferAttribute(
-              geometry3.attributes.position.array,
+              //@ts-ignore: Types vary in each model
+              king.nodes.targetModel.geometry.attributes.position.array,
               3
             );
             return geometry3Attribute;
@@ -220,10 +226,10 @@ export default function Buffer() {
 
         <ComputedAttribute
           name="position4"
-          compute={(geometry) => {
-            const geometry4 = new THREE.TorusGeometry(0.65, 0.2, 16, 100);
+          compute={() => {
             const geometry4Attribute = new THREE.BufferAttribute(
-              geometry4.attributes.position.array,
+              //@ts-ignore: Types vary in each model
+              lightBulb.nodes.targetModel.geometry.attributes.position.array,
               3
             );
             return geometry4Attribute;
@@ -233,10 +239,10 @@ export default function Buffer() {
 
         <ComputedAttribute
           name="position5"
-          compute={(geometry) => {
-            const geometry5 = new THREE.TorusKnotGeometry(0.65, 0.2, 100, 16);
+          compute={() => {
             const geometry5Attribute = new THREE.BufferAttribute(
-              geometry5.attributes.position.array,
+              //@ts-ignore: Types vary in each model
+              rocket.nodes.targetModel.geometry.attributes.position.array,
               3
             );
             return geometry5Attribute;

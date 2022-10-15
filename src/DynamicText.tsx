@@ -7,10 +7,10 @@ export default function DynamicText() {
   let tick = useStore((state) => state.tick);
 
   const [params] = useControls("Texts", () => ({
-    text1: "Lorem ipsum (0)",
-    text2: "Lorem ipsum (1)",
-    text3: "Lorem ipsum (2)",
-    text4: "Lorem ipsum (3)",
+    text1: "design experiences",
+    text2: "think creatively",
+    text3: "love to innovate",
+    text4: "solve problems",
   }));
 
   const text: string[] = Object.values(params);

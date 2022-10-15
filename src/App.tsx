@@ -13,7 +13,9 @@ export default function App() {
     camPosition: [4, 3, 4],
   });
 
-  const { title } = useControls("Texts", { title: "Lorem ipsum siamet" });
+  const { title } = useControls("Texts", {
+    title: "Hello, my name is Rubén and I...",
+  });
 
   return (
     <>
