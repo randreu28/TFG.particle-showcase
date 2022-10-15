@@ -6,15 +6,33 @@ import * as THREE from "three";
 import gsap from "gsap";
 import useStore from "./store/store";
 
-import type { Points } from "three";
+import type { Material, Points } from "three";
 
 // @ts-ignore
 import fragShader from "./shaders/fragment.glsl";
 // @ts-ignore
 import vertShader from "./shaders/vertex.glsl";
 
+//For uniforms type safety
+interface myUniforms extends Material {
+  uniforms: {
+    particleSize: { value: number };
+    bufferColor: { value: THREE.Color };
+    time: { value: number };
+    transparencyState: { value: number };
+    randomState: { value: number };
+    state1: { value: number };
+    state2: { value: number };
+    state3: { value: number };
+  };
+}
+
+interface myPoints extends Points {
+  material: myUniforms;
+}
+
 export default function Buffer() {
-  const ref = useRef<Points>(null!);
+  const ref = useRef<myPoints>(null!);
 
   let { tick, incTick, resetTick } = useStore((state) => ({
     tick: state.tick,
@@ -52,10 +70,7 @@ export default function Buffer() {
 
   //Keeps the internal time variable of the shader updated
   useFrame((state) => {
-    //@ts-ignore
     ref.current.material.uniforms.time.value = state.clock.elapsedTime;
-    /* For complete type-saftey I should extend the default material 
-    type to include the custom uniforms I attached to it */
   });
 
   //Initial animation
