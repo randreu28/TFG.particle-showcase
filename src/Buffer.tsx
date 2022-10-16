@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { useControls } from "leva";
 import { ComputedAttribute, shaderMaterial } from "@react-three/drei";
 import { extend, useFrame, useLoader } from "@react-three/fiber";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import gsap from "gsap";
 import useStore from "./store/store";
@@ -12,7 +13,6 @@ import type { Material, Points } from "three";
 import fragShader from "./shaders/fragment.glsl";
 // @ts-ignore
 import vertShader from "./shaders/vertex.glsl";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 //For uniforms type safety
 interface myUniforms extends Material {
