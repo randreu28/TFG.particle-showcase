@@ -8,8 +8,8 @@ export default function DynamicText() {
 
   const [params] = useControls("Texts", () => ({
     text1: "design experiences",
-    text2: "think creatively",
-    text3: "love to innovate",
+    text2: "love to innovate",
+    text3: "think creatively",
     text4: "solve problems",
   }));
 
