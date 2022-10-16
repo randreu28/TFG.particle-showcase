@@ -178,10 +178,12 @@ export default function Buffer() {
   const lightBulb = useLoader(GLTFLoader, "models/lightbulb.glb");
   const rocket = useLoader(GLTFLoader, "models/rocket.glb");
 
+  const models = [king, lightBulb, rocket];
+
   return (
     <points ref={ref} scale={[2, 2, 2]}>
       <bufferGeometry>
-        <ComputedAttribute
+        <ComputedAttribute // Box
           name="position"
           compute={() => {
             const geometry1 = new THREE.BoxGeometry(1, 1, 1, 16, 16, 16);
@@ -195,7 +197,7 @@ export default function Buffer() {
           usage={THREE.StaticReadUsage}
         />
 
-        <ComputedAttribute
+        <ComputedAttribute // Random particles
           name="position2"
           compute={() => {
             const geometry1 = new THREE.BoxGeometry(1, 1, 1, 16, 16, 16);
@@ -211,44 +213,22 @@ export default function Buffer() {
           usage={THREE.StaticReadUsage}
         />
 
-        <ComputedAttribute
-          name="position3"
-          compute={() => {
-            const geometry3Attribute = new THREE.BufferAttribute(
-              //@ts-ignore: Types vary in each model
-              king.nodes.targetModel.geometry.attributes.position.array,
-              3
-            );
-            return geometry3Attribute;
-          }}
-          usage={THREE.StaticReadUsage}
-        />
-
-        <ComputedAttribute
-          name="position4"
-          compute={() => {
-            const geometry4Attribute = new THREE.BufferAttribute(
-              //@ts-ignore: Types vary in each model
-              lightBulb.nodes.targetModel.geometry.attributes.position.array,
-              3
-            );
-            return geometry4Attribute;
-          }}
-          usage={THREE.StaticReadUsage}
-        />
-
-        <ComputedAttribute
-          name="position5"
-          compute={() => {
-            const geometry5Attribute = new THREE.BufferAttribute(
-              //@ts-ignore: Types vary in each model
-              rocket.nodes.targetModel.geometry.attributes.position.array,
-              3
-            );
-            return geometry5Attribute;
-          }}
-          usage={THREE.StaticReadUsage}
-        />
+        {models.map((model, index) => {
+          return (
+            <ComputedAttribute // The rest of the models
+              name={`position${index + 3}`}
+              compute={() => {
+                const geometryAttribute = new THREE.BufferAttribute(
+                  //@ts-ignore: Types vary in each model
+                  model.nodes.targetModel.geometry.attributes.position.array,
+                  3
+                );
+                return geometryAttribute;
+              }}
+              usage={THREE.StaticReadUsage}
+            />
+          );
+        })}
       </bufferGeometry>
       <shaderMaterial
         key={ShaderMaterial.key}
