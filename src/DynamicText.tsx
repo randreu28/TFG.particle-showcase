@@ -1,4 +1,3 @@
-import React from "react";
 import { TextScramble } from "@a7sc11u/scramble";
 import useStore from "./store/store";
 import { useControls } from "leva";

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { useControls } from "leva";
 import { ComputedAttribute, shaderMaterial } from "@react-three/drei";
 import { extend, useFrame, useLoader } from "@react-three/fiber";

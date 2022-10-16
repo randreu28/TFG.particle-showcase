@@ -1,4 +1,3 @@
-import React from "react";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Vignette, EffectComposer } from "@react-three/postprocessing";
