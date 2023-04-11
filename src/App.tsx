@@ -4,6 +4,7 @@ import { Vignette, EffectComposer } from "@react-three/postprocessing";
 import { useControls } from "leva";
 import Buffer from "./Buffer";
 import DynamicText from "./DynamicText";
+import Signature from "./Signature";
 
 export default function App() {
   const { vignette, backgroundColor, camPosition } = useControls("Scene", {
@@ -18,6 +19,7 @@ export default function App() {
 
   return (
     <>
+      <Signature />
       <div className="h-screen w-screen -z-10 fixed">
         <Canvas>
           <PerspectiveCamera makeDefault position={camPosition} />
